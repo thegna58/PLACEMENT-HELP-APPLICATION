@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alumni Profiles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .controls-container {
+            max-width: 1000px;
+            margin: 0 auto 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .search-container {
+            flex-grow: 1;
+            position: relative;
+            min-width: 250px;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #95a5a6;
+        }
+        
+        .filter-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #fff;
+            color: #34495e;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .add-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            box-shadow: 0 6px 16px rgba(79, 172, 254, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .alumni-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #f1f2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .alumni-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .alumni-name i {
+            color: #4facfe;
+            font-size: 18px;
+        }
+        
+        .alumni-details {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px 25px;
+            gap: 15px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #4facfe;
+        }
+        
+        .card-section {
+            padding: 20px 25px;
+            border-top: 1px solid #f1f2f6;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title i {
+            color: #4facfe;
+        }
+        
+        .experience-list, .answers-list {
+            list-style-type: none;
+        }
+        
+        .experience-item, .answer-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #f1f2f6;
+        }
+        
+        .experience-item:last-child, .answer-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .experience-title, .question-text {
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .experience-desc, .answer-text {
+            color: #7f8c8d;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .card-footer {
+            padding: 15px 25px;
+            border-top: 1px solid #f1f2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fcfcfc;
+        }
+        
+        .contact-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+            color: #4facfe;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            background-color: #e9ecef;
+        }
+        
+        .timestamp {
+            color: #95a5a6;
+            font-size: 13px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .empty-state i {
+            font-size: 60px;
+            color: #e1e8ed;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h3 {
+            font-size: 20px;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        
+        .empty-state p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        
+        .top-nav {
+            margin-bottom: 20px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #4facfe;
+        }
+        
+        .back-link i {
+            margin-right: 5px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            margin-left: 10px;
+        }
+        
+        .badge-success {
+            background-color: #00c49a;
+        }
+        
+        .badge-premium {
+            background-color: #f25767;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 26px;
+            }
+            
+            .alumni-name {
+                font-size: 18px;
+            }
+            
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-btn, .add-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .alumni-details {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .detail-item {
+                width: 100%;
+            }
+        }
+        
+        .loader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(79, 172, 254, 0.1);
+            border-left-color: #4facfe;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    </div>
+    
+    <div class="header">
+        <h1><i class="fas fa-user-graduate"></i> Alumni Profiles</h1>
+        <p>Connect with fellow alumni, explore their career journeys, and learn from their experiences.</p>
+    </div>
+    
+    <div class="controls-container">
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search by name, company, or skills...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <button class="filter-btn" id="filterBtn">
+            <i class="fas fa-filter"></i> Filter
+        </button>
+        <button class="add-btn" onclick="window.location.href='/add-alumni.html'">
+            <i class="fas fa-user-plus"></i> Join Network
+        </button>
+    </div>
+    
+    <div class="container" id="alumniContainer">
+        <div class="loader">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initialize search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                filterAlumni(this.value.toLowerCase());
+            });
+            
+            // Fetch alumni data
+            fetchAlumniData();
+        });
+        
+        function fetchAlumniData() {
+            // Simulating a fetch delay
+            setTimeout(() => {
+                fetch('/api/alumni/') // update this if your base path is different
+                    .then(res => res.json())
+                    .then(data => {
+                        displayAlumniData(data);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching alumni data:", error);
+                        displayErrorState();
+                    });
+            }, 1000); // Simulate network delay
+        }
+        
+        function displayAlumniData(data) {
+            const container = document.getElementById("alumniContainer");
+            container.innerHTML = ''; // Clear loading spinner
+            
+            if (data.length === 0) {
+                displayEmptyState();
+                return;
+            }
+            
+            // Sort alumni by passing year (most recent first)
+            data.sort((a, b) => b.passingYear - a.passingYear);
+            
+            data.forEach(alumni => {
+                const card = createAlumniCard(alumni);
+                container.appendChild(card);
+            });
+        }
+        
+        function createAlumniCard(alumni) {
+            const card = document.createElement("div");
+            card.className = "alumni-card";
+            card.setAttribute('data-name', alumni.name ? alumni.name.toLowerCase() : '');
+            card.setAttribute('data-company', alumni.company ? alumni.company.toLowerCase() : '');
+            
+            const cardHeader = document.createElement("div");
+            cardHeader.className = "card-header";
+            
+            // Create alumni name element with icon
+            const nameElement = document.createElement("h3");
+            nameElement.className = "alumni-name";
+            nameElement.innerHTML = `<i class="fas fa-user-circle"></i> ${alumni.anonymous ? 'Anonymous Alumni' : alumni.name}`;
+            
+            // Add premium badge if applicable
+            if (alumni.premium) {
+                const badge = document.createElement("span");
+                badge.className = "badge badge-premium";
+                badge.textContent = "Premium";
+                nameElement.appendChild(badge);
+            }
+            
+            cardHeader.appendChild(nameElement);
+            card.appendChild(cardHeader);
+            
+            // Create alumni details section
+            const detailsSection = document.createElement("div");
+            detailsSection.className = "alumni-details";
+            
+            // Company detail
+            const companyDetail = document.createElement("div");
+            companyDetail.className = "detail-item";
+            companyDetail.innerHTML = `<i class="fas fa-building"></i> <strong>Company:</strong> ${alumni.company}`;
+            detailsSection.appendChild(companyDetail);
+            
+            // Passing year detail
+            const yearDetail = document.createElement("div");
+            yearDetail.className = "detail-item";
+            yearDetail.innerHTML = `<i class="fas fa-calendar-alt"></i> <strong>Passing Year:</strong> ${alumni.passingYear}`;
+            detailsSection.appendChild(yearDetail);
+            
+            // Salary package detail
+            const salaryDetail = document.createElement("div");
+            salaryDetail.className = "detail-item";
+            salaryDetail.innerHTML = `<i class="fas fa-money-bill-wave"></i> <strong>Package:</strong> ${alumni.salaryPackage} LPA`;
+            detailsSection.appendChild(salaryDetail);
+            
+            card.appendChild(detailsSection);
+            
+            // Create interview experiences section if available
+            if (alumni.interviews && alumni.interviews.length > 0) {
+                const experiencesSection = document.createElement("div");
+                experiencesSection.className = "card-section";
+                
+                const expTitle = document.createElement("h4");
+                expTitle.className = "section-title";
+                expTitle.innerHTML = `<i class="fas fa-briefcase"></i> Interview Experiences`;
+                experiencesSection.appendChild(expTitle);
+                
+                const expList = document.createElement("ul");
+                expList.className = "experience-list";
+                
+                alumni.interviews.forEach(interview => {
+                    const expItem = document.createElement("li");
+                    expItem.className = "experience-item";
+                    
+                    const expTitle = document.createElement("div");
+                    expTitle.className = "experience-title";
+                    expTitle.textContent = interview.title;
+                    
+                    const expDesc = document.createElement("div");
+                    expDesc.className = "experience-desc";
+                    expDesc.textContent = interview.description;
+                    
+                    expItem.appendChild(expTitle);
+                    expItem.appendChild(expDesc);
+                    expList.appendChild(expItem);
+                });
+                
+                experiencesSection.appendChild(expList);
+                card.appendChild(experiencesSection);
+            }
+            
+            // Create query answers section if available
+            if (alumni.answers && alumni.answers.length > 0) {
+                const answersSection = document.createElement("div");
+                answersSection.className = "card-section";
+                
+                const answersTitle = document.createElement("h4");
+                answersTitle.className = "section-title";
+                answersTitle.innerHTML = `<i class="fas fa-comments"></i> Query Answers`;
+                answersSection.appendChild(answersTitle);
+                
+                const answersList = document.createElement("ul");
+                answersList.className = "answers-list";
+                
+                alumni.answers.forEach(answer => {
+                    const answerItem = document.createElement("li");
+                    answerItem.className = "answer-item";
+                    
+                    const questionText = document.createElement("div");
+                    questionText.className = "question-text";
+                    questionText.textContent = answer.question;
+                    
+                    const answerText = document.createElement("div");
+                    answerText.className = "answer-text";
+                    answerText.textContent = answer.answerText;
+                    
+                    answerItem.appendChild(questionText);
+                    answerItem.appendChild(answerText);
+                    answersList.appendChild(answerItem);
+                });
+                
+                answersSection.appendChild(answersList);
+                card.appendChild(answersSection);
+            }
+            
+            // Create footer with contact button and timestamp
+            const cardFooter = document.createElement("div");
+            cardFooter.className = "card-footer";
+            
+            if (!alumni.anonymous) {
+                const contactBtn = document.createElement("button");
+                contactBtn.className = "contact-btn";
+                contactBtn.innerHTML = `<i class="fas fa-envelope"></i> Contact`;
+                cardFooter.appendChild(contactBtn);
+            } else {
+                const anonymousText = document.createElement("span");
+                anonymousText.textContent = "Profile is anonymous";
+                anonymousText.style.color = "#95a5a6";
+                anonymousText.style.fontSize = "13px";
+                cardFooter.appendChild(anonymousText);
+            }
+            
+            const timestamp = document.createElement("div");
+            timestamp.className = "timestamp";
+            timestamp.innerHTML = `<i class="fas fa-clock"></i> Updated ${getRandomTimeAgo()}`;
+            cardFooter.appendChild(timestamp);
+            
+            card.appendChild(cardFooter);
+            
+            return card;
+        }
+        
+        function getRandomTimeAgo() {
+            const options = [
+                "just now", "5 minutes ago", "today", "yesterday", 
+                "2 days ago", "last week", "2 weeks ago", "last month"
+            ];
+            return options[Math.floor(Math.random() * options.length)];
+        }
+        
+        function displayEmptyState() {
+            const container = document.getElementById("alumniContainer");
+            const emptyState = document.createElement("div");
+            emptyState.className = "empty-state";
+            emptyState.innerHTML = `
+                <i class="fas fa-users"></i>
+                <h3>No Alumni Profiles Found</h3>
+                <p>Be the first to join our alumni network and share your experience.</p>
+                <button class="add-btn" onclick="window.location.href='/add-alumni.html'">
+                    <i class="fas fa-user-plus"></i> Join Network
+                </button>
+            `;
+            container.appendChild(emptyState);
+        }
+        
+        function displayErrorState() {
+            const container = document.getElementById("alumniContainer");
+            container.innerHTML = "";
+            const errorState = document.createElement("div");
+            errorState.className = "empty-state";
+            errorState.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Oops! Something went wrong</h3>
+                <p>We couldn't load the alumni profiles. Please try again later.</p>
+                <button class="add-btn" onclick="fetchAlumniData()">
+                    <i class="fas fa-sync"></i> Try Again
+                </button>
+            `;
+            container.appendChild(errorState);
+        }
+        
+        function filterAlumni(searchTerm) {
+            const cards = document.querySelectorAll('.alumni-card');
+            let hasVisibleCards = false;
+            
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                const company = card.getAttribute('data-company');
+                const content = card.textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || company.includes(searchTerm) || content.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    hasVisibleCards = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show no results message if needed
+            const container = document.getElementById("alumniContainer");
+            const noResults = container.querySelector('.no-results');
+            
+            if (!hasVisibleCards) {
+                if (!noResults) {
+                    const noResultsEl = document.createElement("div");
+                    noResultsEl.className = "empty-state no-results";
+                    noResultsEl.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <h3>No Matching Profiles</h3>
+                        <p>We couldn't find any alumni matching your search. Try different keywords.</p>
+                    `;
+                    container.appendChild(noResultsEl);
+                }
+            } else if (noResults) {
+                noResults.remove();
+            }
+        }
+    </script>
+</body>
+</html>

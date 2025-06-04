@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "MainApp",
+            "request": "launch",
+            "mainClass": "main.java.com.example.frontend.MainApp",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Run JavaFX MainApp",
+            "request": "launch",
+            "mainClass": "com.example.frontend.MainApp",
+            "vmArgs": "--module-path \"C:\\Users\\umang\\Documents\\javafx-sdk-21.0.6\\lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "Run Spring Boot Backend",
+            "request": "launch",
+            "mainClass": "com.example.backend.AlumniSystemApplication"
+        }
+    ]
+  }
+  

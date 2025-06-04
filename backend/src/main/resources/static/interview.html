@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Interview Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .page-header h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-left: 15px;
+            flex-grow: 1;
+        }
+        
+        .header-icon {
+            font-size: 28px;
+            color: #4facfe;
+        }
+        
+        .back-link {
+            text-decoration: none;
+            color: #7f8c8d;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .back-link:hover {
+            color: #4facfe;
+        }
+        
+        .back-link i {
+            margin-right: 5px;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px dashed #e6e9ec;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #34495e;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: #4facfe;
+        }
+        
+        .form-row {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1 1 300px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #34495e;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.15);
+        }
+        
+        .form-control::placeholder {
+            color: #b2bec3;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .difficulty-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .difficulty-option {
+            flex: 1;
+            position: relative;
+        }
+        
+        .difficulty-radio {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .difficulty-label {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-radio:checked + .difficulty-label {
+            border-color: transparent;
+            color: white;
+        }
+        
+        .difficulty-radio[value="easy"]:checked + .difficulty-label {
+            background-color: #00c49a;
+        }
+        
+        .difficulty-radio[value="medium"]:checked + .difficulty-label {
+            background-color: #ffba08;
+        }
+        
+        .difficulty-radio[value="hard"]:checked + .difficulty-label {
+            background-color: #f25767;
+        }
+        
+        .difficulty-label .emoji {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            flex: 2;
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: #f8f9fa;
+            color: #7f8c8d;
+            border: 1px solid #e1e8ed;
+            flex: 1;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e9ecef;
+            color: #2c3e50;
+        }
+        
+        .tip-box {
+            background-color: rgba(79, 172, 254, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 14px;
+            color: #34495e;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .tip-box i {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #4facfe;
+        }
+        
+        .notification {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .notification.success {
+            background-color: rgba(0, 196, 154, 0.1);
+            color: #00c49a;
+            border: 1px solid #00c49a;
+        }
+        
+        .notification.error {
+            background-color: rgba(242, 87, 103, 0.1);
+            color: #f25767;
+            border: 1px solid #f25767;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+            
+            .page-header h2 {
+                font-size: 24px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-group {
+                flex: 1 1 100%;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <i class="fas fa-briefcase header-icon"></i>
+            <h2>Share Interview Experience</h2>
+            <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+        
+        <div id="notification" class="notification"></div>
+        
+        <form id="experienceForm">
+            <!-- ID Input -->
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-id-badge"></i> Alumni ID
+                </div>
+                <div class="form-group">
+                    <label for="alumniId">Alumni ID</label>
+                    <input type="text" id="alumniId" name="alumniId" class="form-control" placeholder="Enter your Alumni ID" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-building"></i> Company Information
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" name="companyName" class="form-control" placeholder="e.g. Google, Microsoft" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="position">Position Applied For</label>
+                        <input type="text" id="position" name="position" class="form-control" placeholder="e.g. Software Engineer, Data Analyst" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="interviewDate">Date of Interview</label>
+                        <input type="date" id="interviewDate" name="interviewDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interviewType">Interview Type</label>
+                        <select id="interviewType" name="interviewType" class="form-control" required>
+                            <option value="" disabled selected>Select interview type</option>
+                            <option value="technical">Technical</option>
+                            <option value="hr">HR</option>
+                            <option value="both">Both Technical & HR</option>
+                            <option value="group">Group Discussion</option>
+                            <option value="case">Case Study</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-list-check"></i> Interview Details
+                </div>
+                <div class="form-group">
+                    <label for="questionsAsked">Questions Asked</label>
+                    <textarea id="questionsAsked" name="questionsAsked" class="form-control" 
+                              placeholder="List the key questions asked during the interview. Separate each question with a new line." required></textarea>
+                </div>
+                
+                <div class="tip-box">
+                    <i class="fas fa-lightbulb"></i>
+                    <div>
+                        <strong>Tip:</strong> Include specific technical questions, problem statements, or behavioral questions that were asked. This helps other alumni prepare better!
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">Overall Experience & Tips</label>
+                    <textarea id="experience" name="experience" class="form-control" 
+                              placeholder="Describe your interview experience, the interview process, and any tips for others preparing for similar interviews." required></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="section-title">
+                    <i class="fas fa-gauge"></i> Difficulty Assessment
+                </div>
+                <div class="form-group">
+                    <label>Interview Difficulty Level</label>
+                    <div class="difficulty-options">
+                        <div class="difficulty-option">
+                            <input type="radio" id="easy" name="difficulty" value="easy" class="difficulty-radio" required>
+                            <label for="easy" class="difficulty-label">
+                                <span class="emoji">😊</span>
+                                Easy
+                            </label>
+                        </div>
+                        <div class="difficulty-option">
+                            <input type="radio" id="medium" name="difficulty" value="medium" class="difficulty-radio">
+                            <label for="medium" class="difficulty-label">
+                                <span class="emoji">🤔</span>
+                                Medium
+                            </label>
+                        </div>
+                        <div class="difficulty-option">
+                            <input type="radio" id="hard" name="difficulty" value="hard" class="difficulty-radio">
+                            <label for="hard" class="difficulty-label">
+                                <span class="emoji">😰</span>
+                                Hard
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="outcome">Interview Outcome</label>
+                        <select id="outcome" name="outcome" class="form-control">
+                            <option value="" disabled selected>Select outcome (optional)</option>
+                            <option value="selected">Selected</option>
+                            <option value="rejected">Not Selected</option>
+                            <option value="waiting">Waiting for Results</option>
+                            <option value="private">Prefer Not to Share</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Overall Rating (1-5)</label>
+                        <select id="rating" name="rating" class="form-control">
+                            <option value="" disabled selected>Rate your experience (optional)</option>
+                            <option value="5">5 - Excellent</option>
+                            <option value="4">4 - Good</option>
+                            <option value="3">3 - Average</option>
+                            <option value="2">2 - Below Average</option>
+                            <option value="1">1 - Poor</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Submit Experience
+                </button>
+                <button type="reset" class="btn btn-secondary">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        const form = document.getElementById("experienceForm");
+        const notification = document.getElementById("notification");
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            // You could replace this with an actual fetch/AJAX request to backend
+            notification.className = "notification success";
+            notification.innerText = "Your interview experience has been submitted successfully!";
+            notification.style.display = "block";
+            form.reset();
+            setTimeout(() => notification.style.display = "none", 5000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Alumni Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-container h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 500;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4facfe;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .login-btn:hover {
+            background-color: #00f2fe;
+        }
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #7f8c8d;
+        }
+        .login-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <form class="login-container" onsubmit="return handleRegister(event)">
+        <h2><i class="fas fa-user-circle"></i> Register</h2>
+    
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" required autocomplete="username">
+        </div>
+    
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required autocomplete="new-password">
+        </div>
+    
+        <div class="form-group">
+            <label for="role">Select Role</label>
+            <select name="role" id="role" required>
+                <option value="">-- Select Role --</option>
+                <option value="ADMIN">ADMIN</option>
+                <option value="STUDENT">STUDENT</option>
+                <option value="ALUMNI">ALUMNI</option>
+            </select>
+        </div>
+    
+        <button type="submit" class="login-btn" style="display: block; width: 100%;">Register</button>
+    
+        <div class="login-footer">
+            <p>Already registered? <a href="/login.html">Login here</a></p>
+        </div>
+    </form>
+    
+    <script>
+        function handleRegister(event) {
+            event.preventDefault(); // Prevent actual form submission
+    
+            const role = document.getElementById("role").value;
+    
+            // Redirect based on role
+            if (role === "ADMIN") {
+                window.location.href = "placement.html";
+            } else if (role === "STUDENT") {
+                window.location.href = "student-form.html";
+            } else if (role === "ALUMNI") {
+                window.location.href = "index.html";
+            } else {
+                alert("Please select a valid role.");
+            }
+    
+            return false;
+        }
+    </script>
+    
+
+</body>
+</html>

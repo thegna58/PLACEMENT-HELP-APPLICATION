@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Queries</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --success: #4cc9f0;
+      --danger: #f72585;
+      --dark: #3a0ca3;
+      --light: #f8f9fa;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background-color: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+    }
+    
+    h1 {
+      color: var(--dark);
+      margin: 0;
+      font-size: 2.2rem;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+    
+    form {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #444;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #3251d4;
+      transform: translateY(-2px);
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #e61a76;
+      transform: translateY(-2px);
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background-color: #36b6dc;
+      transform: translateY(-2px);
+    }
+    
+    h2 {
+      color: var(--dark);
+      margin: 30px 0 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .questions-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .question {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+      transition: transform 0.2s;
+      border-left: 5px solid var(--primary);
+    }
+    
+    .question:hover {
+      transform: translateY(-5px);
+    }
+    
+    .student-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    
+    .question-content {
+      color: #555;
+      margin-bottom: 15px;
+    }
+    
+    .question-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .upvotes {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    
+    .no-questions {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px var(--shadow);
+      color: #666;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      form, .question {
+        padding: 15px;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Student Queries</h1>
+      <p class="subtitle">Ask questions and get answers from your peers</p>
+    </header>
+
+    <form id="questionForm">
+      <div class="form-group">
+        <label for="title">👤 Student Name</label>
+        <input type="text" id="title" placeholder="Enter your name" required />
+      </div>
+      
+      <div class="form-group">
+        <label for="content">💬 Question Details</label>
+        <textarea id="content" placeholder="Provide more details about your question..." rows="4" required></textarea>
+      </div>
+      
+      <div class="button-group">
+        <button type="submit" class="btn-primary">
+          <span>✅ Submit Question</span>
+        </button>
+        <button type="button" class="btn-danger" onclick="deleteAllQuestions()">
+          <span>🗑️ Delete All Questions</span>
+        </button>
+      </div>
+    </form>
+
+    <h2>🔍 All Questions</h2>
+    <div id="questionList" class="questions-container"></div>
+  </div>
+
+  <script>
+    const apiURL = "http://localhost:8080/questions";
+
+    // Submit question
+    document.getElementById("questionForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const title = document.getElementById("title").value;
+      const content = document.getElementById("content").value;
+
+      const question = { title, content, upvotes: 0 };
+
+      try {
+        const response = await fetch(apiURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(question)
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to submit question');
+        }
+
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+        loadQuestions();
+      } catch (error) {
+        alert('Error submitting question: ' + error.message);
+      }
+    });
+
+    // Load all questions
+    async function loadQuestions() {
+      try {
+        const res = await fetch(apiURL);
+        
+        if (!res.ok) {
+          throw new Error('Failed to fetch questions');
+        }
+        
+        const questions = await res.json();
+        const list = document.getElementById("questionList");
+        list.innerHTML = "";
+
+        if (questions.length === 0) {
+          list.innerHTML = `
+            <div class="no-questions">
+              <h3>😮 No questions yet</h3>
+              <p>Be the first to ask a question!</p>
+            </div>
+          `;
+          return;
+        }
+
+        // Sort questions by upvotes (highest first)
+        questions.sort((a, b) => b.upvotes - a.upvotes);
+
+        questions.forEach(q => {
+          const div = document.createElement("div");
+          div.className = "question";
+          div.innerHTML = `
+            <h3 class="student-name">👨‍🎓 ${q.title}</h3>
+            <div class="question-content">${q.content}</div>
+            <div class="question-meta">
+              <div class="upvotes">
+                <span>👍 Upvotes: ${q.upvotes}</span>
+              </div>
+              <button class="btn-success" onclick="upvote(${q.id})">
+                👍 Upvote
+              </button>
+            </div>
+          `;
+          list.appendChild(div);
+        });
+      } catch (error) {
+        alert('Error loading questions: ' + error.message);
+      }
+    }
+
+    // Upvote
+    async function upvote(id) {
+      try {
+        const response = await fetch(`${apiURL}/upvote/${id}`, { method: "POST" });
+        
+        if (!response.ok) {
+          throw new Error('Failed to upvote question');
+        }
+        
+        loadQuestions();
+      } catch (error) {
+        alert('Error upvoting question: ' + error.message);
+      }
+    }
+
+    // Delete all
+    async function deleteAllQuestions() {
+      if (confirm("🚨 Are you sure you want to delete all questions? This cannot be undone!")) {
+        try {
+          const response = await fetch(`${apiURL}/all`, { method: "DELETE" });
+          
+          if (!response.ok) {
+            throw new Error('Failed to delete questions');
+          }
+          
+          loadQuestions();
+        } catch (error) {
+          alert('Error deleting questions: ' + error.message);
+        }
+      }
+    }
+
+    // Initial load
+    document.addEventListener('DOMContentLoaded', function() {
+      loadQuestions();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Alumni Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      color: #333;
+    }
+    form {
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    .message {
+      margin-top: 15px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>Submit Alumni Info</h2>
+  <form id="alumniForm">
+    <input type="text" id="name" placeholder="Name" required />
+    <input type="text" id="company" placeholder="Company" required />
+    <input type="number" id="passingYear" placeholder="Passing Year (optional)" />
+    <input type="number" id="salaryPackage" placeholder="Salary Package (optional)" />
+    <select id="anonymous">
+      <option value="false">Not Anonymous</option>
+      <option value="true">Anonymous</option>
+    </select>
+    <button type="submit">Submit</button>
+    <div class="message" id="responseMessage"></div>
+  </form>
+
+  <script>
+    document.getElementById('alumniForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const alumniData = {
+        name: document.getElementById('name').value,
+        company: document.getElementById('company').value,
+        passingYear: document.getElementById('passingYear').value || null,
+        salaryPackage: document.getElementById('salaryPackage').value || null,
+        anonymous: document.getElementById('anonymous').value === 'true'
+      };
+
+      try {
+        const response = await fetch('http://localhost:8080/api/alumni/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(alumniData)
+        });
+
+        const result = await response.json();
+        document.getElementById('responseMessage').textContent = "Alumni added: " + result.name;
+      } catch (err) {
+        document.getElementById('responseMessage').textContent = "Error: Could not add alumni.";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
